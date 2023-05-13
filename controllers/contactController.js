@@ -2,7 +2,7 @@ const Contact = require("../models/contactModel");
 
 exports.getAllContacts = async (req, res) => {
   try {
-    const contacts = await Contact.find();
+    const contacts = await Contact.find().select("-__v");
     res.status(200).json({
       status: "success",
       results: contacts.length,
@@ -26,6 +26,7 @@ exports.createContact = async (req, res) => {
       message: "New Contact Created Successfully",
     });
   } catch (err) {
+    res.status(400);
     res.json({
       status: "fail",
       message: err,
@@ -35,7 +36,17 @@ exports.createContact = async (req, res) => {
 
 exports.getSingleContact = async (req, res) => {
   try {
-    const contact = await Contact.findById(req.params.id);
+    //find contact by id and select all fields except __v
+
+    const contact = await Contact.findById(req.params.id).select("-__v");
+
+    // if contact is not found with id then return error
+    if (!contact) {
+      return res.status(404).json({
+        status: "failed",
+        message: "No Contact Found",
+      });
+    }
     res.status(200).json({
       status: "success",
       data: {
@@ -52,8 +63,9 @@ exports.getSingleContact = async (req, res) => {
 
 exports.updateContact = async (req, res) => {
   try {
+    //find contact by id and update it with new data
     const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      //runValidators: true is used to run all the validators in the schema
       runValidators: true,
     });
     res.status(200).json({

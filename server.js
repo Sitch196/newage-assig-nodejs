@@ -13,7 +13,7 @@ const connectDB = async () => {
 };
 connectDB();
 
-//Start the server
+//Starting the server
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
