@@ -1,7 +1,7 @@
 # Overview
 
 This project is a simple REST API built with node js that allows users to perform simple CRUD operations on a database.Database i've chosen no-sql mogodb atlas and data is saved directly in the cloud ,easier routing is done with express and
-to query the data i used much simpler mongoose. To be sure I've tested everything with postman myself
+to query the data i used much simpler mongoose.
 
 # Getting Started
 
@@ -22,6 +22,8 @@ PORT=(server port)
 ```
 
 - Run **npm run dev** to start the server.
+
+- To send afew test requests, I've provided a postman collection in `tests/`
 
 # API Endpoints
 
